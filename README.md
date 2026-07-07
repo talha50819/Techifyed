@@ -27,6 +27,6 @@ app can be deployed as a plain Node.js app (see below).
 
 ## Deployment
 
-This site auto-deploys to Hostinger on every push to `main` via GitHub
-Actions. See [DEPLOYMENT.md](./DEPLOYMENT.md) for the one-time hPanel
-and secrets setup.
+This site is deployed manually to Hostinger (Node.js hosting). See
+[DEPLOYMENT.md](./DEPLOYMENT.md) for the hPanel setup and the
+pull/build steps to run after each push.
