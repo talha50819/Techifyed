@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { askGemini } from "@/lib/askGemini";
 
 export default function AiBar() {
   const [question, setQuestion] = useState("");
@@ -20,19 +21,10 @@ export default function AiBar() {
     setAnswer(null);
 
     try {
-      const res = await fetch("/api/ask", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: trimmed }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data?.error || "Something went wrong. Please try again.");
-      } else {
-        setAnswer(data.answer);
-      }
-    } catch {
-      setError("Something went wrong. Please try again.");
+      const result = await askGemini(trimmed);
+      setAnswer(result);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }

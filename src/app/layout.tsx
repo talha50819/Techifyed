@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ContentGuard from "@/components/ContentGuard";
 
 const heading = Plus_Jakarta_Sans({
   variable: "--font-heading",
@@ -35,6 +36,7 @@ export default function RootLayout({
       className={`${heading.variable} ${body.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-[var(--foreground)]">
+        <ContentGuard />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

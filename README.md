@@ -1,7 +1,8 @@
 # Techifyed
 
 Marketing website for Techifyed, a digital agency — built with Next.js
-(App Router), TypeScript, and Tailwind CSS.
+(App Router), TypeScript, and Tailwind CSS, exported as a fully static
+site.
 
 ## Getting started
 
@@ -12,21 +13,21 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Copy `.env.example` to `.env.local` and set `GEMINI_API_KEY` to enable
-the AI bar on the homepage (`/api/ask`).
+Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_GEMINI_API_KEY`
+to enable the AI bar on the homepage. It calls Gemini directly from the
+browser (see [DEPLOYMENT.md](./DEPLOYMENT.md) for why, and the tradeoff
+that implies for the key).
 
 ## Building for production
 
 ```bash
 npm run build
-npm start
 ```
 
-`npm start` runs `server.js`, a small custom Next.js server used so the
-app can be deployed as a plain Node.js app (see below).
+Generates a static `out/` folder — plain HTML/CSS/JS, no server
+required. Preview it locally with `npm run preview`.
 
 ## Deployment
 
-This site is deployed manually to Hostinger (Node.js hosting). See
-[DEPLOYMENT.md](./DEPLOYMENT.md) for the hPanel setup and the
-pull/build steps to run after each push.
+Upload the contents of `out/` to Hostinger's `public_html`. See
+[DEPLOYMENT.md](./DEPLOYMENT.md) for the exact steps.
