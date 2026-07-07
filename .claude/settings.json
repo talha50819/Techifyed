@@ -69,7 +69,20 @@
       "Bash(curl --ssl-no-revoke -sL --max-time 20 -o \"C:/Users/JSK/AppData/Local/Temp/claude/c--Users-JSK-Documents-GitHub-Techifyed/fe19cf87-22b4-4d90-b93d-d563a6d9c286/scratchpad/tech-preview.jpg\" \"https://images.pexels.com/videos/11041433/pexels-photo-11041433.jpeg?auto=compress&w=800\")",
       "Bash(cp /tmp/tech1.mp4 public/videos/hero-bg.mp4)",
       "Bash(cp \"C:/Users/JSK/AppData/Local/Temp/claude/c--Users-JSK-Documents-GitHub-Techifyed/fe19cf87-22b4-4d90-b93d-d563a6d9c286/scratchpad/tech-preview.jpg\" public/images/hero-poster.jpg)",
-      "Bash(node -e \"console.log\\(require\\('next/package.json'\\).version\\)\")"
+      "Bash(node -e \"console.log\\(require\\('next/package.json'\\).version\\)\")",
+      "Bash(gh auth *)",
+      "Bash(gh run *)",
+      "Bash(gh api *)",
+      "Bash(python3 -c ' *)",
+      "Bash(gh workflow *)",
+      "Bash(python3 -m json.tool)",
+      "Bash(mkdir -p \"c:/Users/JSK/Documents/GitHub/Techifyed/.github/workflows\")",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(timeout 15 gh auth refresh -h github.com -s user)",
+      "Bash(gh repo *)",
+      "Bash(rm .github/workflows/test-minimal.yml)"
     ],
     "additionalDirectories": [
       "\\tmp"
