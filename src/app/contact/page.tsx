@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import { MapPin, Phone, Mail } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ContactForm from "@/components/ContactForm";
 import { siteConfig } from "@/data/siteConfig";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "Contact",
   description:
     "Get in touch with Techifyed — call, email, or send us a message about your project.",
-};
+  path: "/contact/",
+});
 
 const emailCards = [
   { label: "General inquiries", email: siteConfig.emails.info },
@@ -28,6 +29,7 @@ export default function ContactPage() {
       <section className="bg-radial-fade py-20 sm:py-28">
         <Container>
           <SectionHeading
+            as="h1"
             eyebrow="Contact us"
             title="Let's talk about your project"
             description="Reach out however is easiest — we typically respond within one business day."

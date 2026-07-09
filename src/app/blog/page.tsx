@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import { Newspaper } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/CTASection";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "Blog",
   description:
     "Insights on web development, design, marketing, and technology from the Techifyed team.",
-};
+  path: "/blog/",
+});
 
 const upcomingTopics = [
   {
@@ -35,6 +36,7 @@ export default function BlogPage() {
       <section className="bg-radial-fade py-20 sm:py-28">
         <Container>
           <SectionHeading
+            as="h1"
             eyebrow="Insights"
             title="Our blog is coming soon"
             description="We're building out a library of practical articles on web, design, marketing, and technology. Here's a preview of what's on the way."

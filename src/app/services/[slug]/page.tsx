@@ -7,6 +7,7 @@ import Button from "@/components/ui/Button";
 import CTASection from "@/components/CTASection";
 import ServiceIcon from "@/components/ServiceIcon";
 import { services, getServiceBySlug } from "@/data/services";
+import { buildMetadata, SITE_URL } from "@/lib/seo";
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -20,10 +21,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getServiceBySlug(slug);
   if (!service) return {};
-  return {
+  return buildMetadata({
     title: service.title,
     description: service.longDesc,
-  };
+    path: `/services/${service.slug}/`,
+  });
 }
 
 export default async function ServiceDetailPage({
@@ -39,8 +41,51 @@ export default async function ServiceDetailPage({
     .filter((s) => s.slug !== service.slug)
     .slice(0, 3);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: service.title,
+    name: service.title,
+    description: service.longDesc,
+    url: `${SITE_URL}/services/${service.slug}/`,
+    provider: {
+      "@type": "ProfessionalService",
+      name: "Techifyed",
+      url: SITE_URL,
+    },
+    areaServed: "US",
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Services",
+        item: `${SITE_URL}/services/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: service.title,
+        item: `${SITE_URL}/services/${service.slug}/`,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <section className="bg-radial-fade py-20 sm:py-28">
         <Container>
           <nav className="text-sm text-neutral-500">
@@ -60,10 +105,73 @@ export default async function ServiceDetailPage({
                 {service.title}
               </h1>
               <p className="mt-5 text-lg text-neutral-600">{service.longDesc}</p>
-              <div className="mt-8">
+              <div className="mt-8 flex flex-wrap gap-4">
                 <Button href="/contact">
                   Start a project <ArrowRight className="h-4 w-4" />
                 </Button>
+                {service.slug === "web-development" && (
+                  <Button href="/custom-web-development-services-usa" variant="secondary">
+                    See USA web development services
+                  </Button>
+                )}
+                {service.slug === "mobile-app-development" && (
+                  <Button href="/mobile-app-development-services-usa" variant="secondary">
+                    See USA mobile app development services
+                  </Button>
+                )}
+                {service.slug === "ui-ux-design" && (
+                  <Button href="/ui-ux-design-services-usa" variant="secondary">
+                    See USA UI/UX design services
+                  </Button>
+                )}
+                {service.slug === "graphic-design-branding" && (
+                  <Button href="/graphic-design-branding-services-usa" variant="secondary">
+                    See USA branding services
+                  </Button>
+                )}
+                {service.slug === "digital-marketing" && (
+                  <Button href="/digital-marketing-services-usa" variant="secondary">
+                    See USA digital marketing services
+                  </Button>
+                )}
+                {service.slug === "ai-ml-solutions" && (
+                  <Button href="/ai-ml-solutions-usa" variant="secondary">
+                    See USA AI/ML solutions
+                  </Button>
+                )}
+                {service.slug === "content-creation" && (
+                  <Button href="/content-creation-services-usa" variant="secondary">
+                    See USA content creation services
+                  </Button>
+                )}
+                {service.slug === "content-writing" && (
+                  <Button href="/content-writing-services-usa" variant="secondary">
+                    See USA content writing services
+                  </Button>
+                )}
+                {service.slug === "software-development" && (
+                  <Button href="/software-development-services-usa" variant="secondary">
+                    See USA software development services
+                  </Button>
+                )}
+                {service.slug === "business-applications-enterprise-solutions" && (
+                  <Button
+                    href="/business-applications-enterprise-solutions-usa"
+                    variant="secondary"
+                  >
+                    See USA business applications & enterprise solutions
+                  </Button>
+                )}
+                {service.slug === "cybersecurity-services" && (
+                  <Button href="/cybersecurity-services-usa" variant="secondary">
+                    See USA cybersecurity services
+                  </Button>
+                )}
+                {service.slug === "it-consulting" && (
+                  <Button href="/it-consulting-services-usa" variant="secondary">
+                    See USA IT consulting services
+                  </Button>
+                )}
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import Logo from "./Logo";
 import Button from "./ui/Button";
 import Container from "./ui/Container";
@@ -15,31 +15,20 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200/80 bg-white/85 backdrop-blur-md">
-      <Container className="flex items-center justify-between py-4">
-        <Logo />
+      <Container className="flex items-center justify-between py-6">
+        <Logo className="h-20" />
 
-        <nav className="hidden items-center gap-8 lg:flex">
-          {siteConfig.nav.map((item) => {
-            const active =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary-600 ${
-                  active ? "text-primary-600" : "text-neutral-700"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="hidden lg:block">
-          <Button href="/contact">Get a Quote</Button>
+        <div className="hidden items-center gap-8 lg:flex">
+          <a
+            href={`tel:${siteConfig.phoneHref}`}
+            className="flex items-center gap-2 text-3xl font-semibold text-neutral-700 hover:text-primary-600"
+          >
+            <Phone className="h-9 w-9" />
+            {siteConfig.phone}
+          </a>
+          <Button href="/contact" className="px-12 py-6 text-2xl">
+            Get a Quote
+          </Button>
         </div>
 
         <button
@@ -49,9 +38,31 @@ export default function Header() {
           aria-label="Toggle menu"
           aria-expanded={open}
         >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {open ? <X className="h-10 w-10" /> : <Menu className="h-10 w-10" />}
         </button>
       </Container>
+
+      <nav className="hidden border-t border-neutral-200/80 lg:block">
+        <Container className="flex items-center justify-center gap-14 py-5">
+          {siteConfig.nav.map((item) => {
+            const active =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-2xl transition-colors hover:text-primary-600 ${
+                  active ? "font-bold text-primary-600" : "font-medium text-neutral-700"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </Container>
+      </nav>
 
       {open && (
         <div className="border-t border-neutral-200 bg-white lg:hidden">

@@ -1,0 +1,14 @@
+# Redirects from the old WordPress site's URLs to their new equivalents.
+# Kept as 301s (not 302s) so search engines transfer indexing signals
+# to the new URLs instead of treating them as separate pages.
+
+RedirectMatch 301 ^/about-us/?$ /about/
+RedirectMatch 301 ^/web-developement/?$ /services/web-development/
+RedirectMatch 301 ^/cross-platform-apps/?$ /services/mobile-app-development/
+RedirectMatch 301 ^/brand-identity/?$ /services/graphic-design-branding/
+RedirectMatch 301 ^/category/technology/?$ /blog/
+RedirectMatch 301 ^/contact-us/?$ /contact/
+RedirectMatch 301 ^/pricing/?$ /contact/
+RedirectMatch 301 ^/solutions/?$ /services/
+
+ErrorDocument 404 /404.html

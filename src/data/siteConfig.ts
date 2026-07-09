@@ -4,6 +4,13 @@ export const siteConfig = {
   description:
     "Techifyed is a full-service digital agency delivering web development, mobile apps, design, marketing, AI/ML, and enterprise software.",
   address: "2410 Canopy Breeze Circle, Orlando, FL 32824, USA",
+  addressParts: {
+    street: "2410 Canopy Breeze Circle",
+    city: "Orlando",
+    region: "FL",
+    postalCode: "32824",
+    country: "US",
+  },
   phone: "(407) 706-4774",
   phoneHref: "+14077064774",
   emails: {

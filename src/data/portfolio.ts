@@ -3,7 +3,7 @@ export type PortfolioItem = {
   title: string;
   category: string;
   blurb: string;
-  image: string;
+  video: string;
   gradient: string;
 };
 
@@ -14,7 +14,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "Web Development",
     blurb:
       "A full storefront rebuild focused on faster load times and a streamlined checkout flow.",
-    image: "/images/portfolio/ecommerce.jpg",
+    video: "/videos/portfolio-ecommerce.mp4",
     gradient: "from-primary-600 to-accent-500",
   },
   {
@@ -23,7 +23,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "Mobile App Development",
     blurb:
       "A cross-platform companion app for tracking workouts, goals, and progress.",
-    image: "/images/portfolio/fitness-app.jpg",
+    video: "/videos/portfolio-fitness.mp4",
     gradient: "from-primary-700 to-primary-400",
   },
   {
@@ -32,7 +32,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "UI/UX Design",
     blurb:
       "Simplified appointment booking and records access for a healthcare provider portal.",
-    image: "/images/portfolio/healthcare-ux.jpg",
+    video: "/videos/portfolio-healthcare.mp4",
     gradient: "from-accent-500 to-primary-600",
   },
   {
@@ -41,7 +41,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "Graphic Design & Branding",
     blurb:
       "A full visual identity system, from logo mark to marketing collateral guidelines.",
-    image: "/images/portfolio/branding.jpg",
+    video: "/videos/portfolio-branding.mp4",
     gradient: "from-primary-500 to-accent-600",
   },
   {
@@ -50,7 +50,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "Digital Marketing",
     blurb:
       "An SEO and paid media program built to grow organic and local search visibility.",
-    image: "/images/portfolio/seo-growth.jpg",
+    video: "/videos/portfolio-seo.mp4",
     gradient: "from-primary-600 to-primary-900",
   },
   {
@@ -59,7 +59,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "AI/ML Solutions",
     blurb:
       "A custom support chatbot trained on internal documentation to deflect routine tickets.",
-    image: "/images/portfolio/ai-assistant.jpg",
+    video: "/videos/portfolio-ai.mp4",
     gradient: "from-accent-500 to-primary-800",
   },
 ];

@@ -1,11 +1,21 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowRight,
   Sparkles,
   ShieldCheck,
   Gauge,
   Users2,
+  Layers,
+  UserRound,
+  MapPin,
+  HeartPulse,
+  ShoppingBag,
+  Landmark,
+  GraduationCap,
+  Plane,
+  Rocket,
+  HandHeart,
+  Home as HomeIcon,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
@@ -15,6 +25,13 @@ import CTASection from "@/components/CTASection";
 import AiBar from "@/components/AiBar";
 import { services } from "@/data/services";
 import { portfolioItems } from "@/data/portfolio";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata = buildMetadata({
+  description:
+    "Techifyed is a full-service digital agency delivering web development, mobile apps, UI/UX design, branding, digital marketing, AI/ML solutions, and enterprise software.",
+  path: "/",
+});
 
 const valueProps = [
   {
@@ -50,6 +67,57 @@ const processSteps = [
   { step: "04", title: "Grow", description: "We launch, measure, and keep improving with you." },
 ];
 
+const trustStats = [
+  { icon: Layers, value: "12", label: "service disciplines under one roof" },
+  { icon: UserRound, value: "1", label: "dedicated point of contact per project" },
+  { icon: ShieldCheck, value: "100%", label: "senior-led delivery, no junior hand-offs" },
+  { icon: MapPin, value: "FL", label: "Orlando-based, remote-friendly team" },
+];
+
+const industries = [
+  { icon: HeartPulse, label: "Healthcare" },
+  { icon: ShoppingBag, label: "Retail & E-commerce" },
+  { icon: HomeIcon, label: "Real Estate" },
+  { icon: Landmark, label: "Fintech & Professional Services" },
+  { icon: GraduationCap, label: "Education" },
+  { icon: Plane, label: "Hospitality & Travel" },
+  { icon: Rocket, label: "Startups" },
+  { icon: HandHeart, label: "Nonprofits" },
+];
+
+const faqs = [
+  {
+    question: "How long does a typical project take?",
+    answer:
+      "It depends on scope — a marketing site can launch in a few weeks, while a full product build or enterprise integration may run several months. We give you a realistic timeline after the discovery phase, not before.",
+  },
+  {
+    question: "Do you work with businesses outside Florida?",
+    answer:
+      "Yes. We're based in Orlando, FL, but most of our collaboration happens remotely — video calls, shared docs, and async updates — so location isn't a barrier.",
+  },
+  {
+    question: "Can you take over an existing project or codebase?",
+    answer:
+      "Often, yes. We start with an audit of what's there, flag any risks, and give you an honest read on whether to extend it or rebuild key parts before committing to a plan.",
+  },
+  {
+    question: "What does working together actually look like?",
+    answer:
+      "You get one point of contact who coordinates design, engineering, and strategy behind the scenes, plus regular check-ins so you always know what's shipped and what's next.",
+  },
+  {
+    question: "Do you offer support after launch?",
+    answer:
+      "Yes — ongoing maintenance, monitoring, and iteration are available for every service line, so your product keeps working (and improving) after launch day.",
+  },
+  {
+    question: "How is pricing structured?",
+    answer:
+      "Most engagements are scoped as a fixed project fee after discovery; ongoing work (support, marketing, retained development) is typically a monthly rate. We'll recommend the right structure for your project.",
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -81,11 +149,28 @@ export default function Home() {
         </Container>
       </section>
 
+      <section className="border-y border-neutral-200 bg-white py-10">
+        <Container>
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+            {trustStats.map(({ icon: Icon, value, label }) => (
+              <div key={label} className="flex flex-col items-center text-center">
+                <Icon className="h-5 w-5 text-primary-600" />
+                <span className="mt-3 font-[family-name:var(--font-heading)] text-2xl font-bold text-[var(--foreground)]">
+                  {value}
+                </span>
+                <span className="mt-1 text-xs leading-relaxed text-neutral-600">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       <section className="relative isolate flex min-h-[420px] items-center overflow-hidden">
         <video
           className="absolute inset-0 -z-10 h-full w-full object-cover"
           src="/videos/hero-bg.mp4"
-          poster="/images/hero-poster.jpg"
           autoPlay
           muted
           loop
@@ -122,6 +207,30 @@ export default function Home() {
         </Container>
       </section>
 
+      <section className="relative isolate flex min-h-[380px] items-center overflow-hidden">
+        <video
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          src="/videos/tech-code.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="absolute inset-0 -z-10 bg-primary-950/80" />
+        <Container className="py-16 text-center">
+          <span className="inline-block text-sm font-semibold tracking-wide text-primary-200 uppercase">
+            Under the hood
+          </span>
+          <h2 className="mx-auto mt-3 max-w-2xl font-[family-name:var(--font-heading)] text-3xl font-bold text-white sm:text-4xl">
+            Built on modern, reliable technology
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-white/80">
+            Clean architecture, tested code, and tooling chosen for your
+            project — not whatever&apos;s trendy this quarter.
+          </p>
+        </Container>
+      </section>
+
       <section className="bg-primary-50/60 py-20 sm:py-28">
         <Container>
           <SectionHeading
@@ -140,6 +249,29 @@ export default function Home() {
                 <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                   {description}
                 </p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-20 sm:py-28">
+        <Container>
+          <SectionHeading
+            eyebrow="Where we work"
+            title="Industries we build for"
+            description="Different sectors, different constraints — we adapt our approach to what your business and users actually need."
+          />
+          <div className="mt-14 grid grid-cols-2 gap-6 sm:grid-cols-4">
+            {industries.map(({ icon: Icon, label }) => (
+              <div
+                key={label}
+                className="flex flex-col items-center gap-3 rounded-2xl border border-neutral-200 px-4 py-8 text-center transition-colors hover:border-primary-200 hover:bg-primary-50/60"
+              >
+                <Icon className="h-6 w-6 text-primary-600" />
+                <span className="text-sm font-medium text-[var(--foreground)]">
+                  {label}
+                </span>
               </div>
             ))}
           </div>
@@ -170,6 +302,31 @@ export default function Home() {
         </Container>
       </section>
 
+      <section className="relative isolate flex min-h-[380px] items-center overflow-hidden">
+        <video
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          src="/videos/mobile-hands.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="absolute inset-0 -z-10 bg-primary-950/80" />
+        <div className="absolute inset-0 -z-10 gradient-brand opacity-30 mix-blend-multiply" />
+        <Container className="py-16 text-center">
+          <span className="inline-block text-sm font-semibold tracking-wide text-primary-200 uppercase">
+            Built for real usage
+          </span>
+          <h2 className="mx-auto mt-3 max-w-2xl font-[family-name:var(--font-heading)] text-3xl font-bold text-white sm:text-4xl">
+            Designed for wherever your users are
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-white/80">
+            Desktop, mobile, tablet — every product we ship is built to feel
+            right on the device it&apos;s actually used on.
+          </p>
+        </Container>
+      </section>
+
       <section className="bg-primary-50/60 py-20 sm:py-28">
         <Container>
           <SectionHeading
@@ -185,12 +342,13 @@ export default function Home() {
                 className="group overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-shadow hover:shadow-lg"
               >
                 <div className="relative h-40 overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  <video
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    src={item.video}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-40 mix-blend-multiply`}
@@ -212,6 +370,28 @@ export default function Home() {
             <Button href="/portfolio" variant="secondary">
               View full portfolio
             </Button>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-20 sm:py-28">
+        <Container>
+          <SectionHeading
+            eyebrow="Questions"
+            title="Frequently asked questions"
+            description="Answers to what prospective clients ask us most."
+          />
+          <div className="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2">
+            {faqs.map(({ question, answer }) => (
+              <div key={question} className="rounded-2xl border border-neutral-200 p-6">
+                <h3 className="font-[family-name:var(--font-heading)] text-base font-semibold text-[var(--foreground)]">
+                  {question}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">
+                  {answer}
+                </p>
+              </div>
+            ))}
           </div>
         </Container>
       </section>

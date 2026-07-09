@@ -4,18 +4,23 @@ import { FormEvent, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import Button from "./ui/Button";
 import { services } from "@/data/services";
+import { siteConfig } from "@/data/siteConfig";
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const name = String(formData.get("name") || "").trim();
     const email = String(formData.get("email") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const service = String(formData.get("service") || "").trim();
     const message = String(formData.get("message") || "").trim();
 
     const nextErrors: Errors = {};
@@ -26,8 +31,44 @@ export default function ContactForm() {
     if (!message) nextErrors.message = "Please add a short message.";
 
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length === 0) {
+    if (Object.keys(nextErrors).length > 0) return;
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+    if (!accessKey) {
+      setSubmitError(
+        `The contact form isn't configured yet. Please email us directly at ${siteConfig.emails.info}.`
+      );
+      return;
+    }
+
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: `New inquiry from ${siteConfig.name} website`,
+          name,
+          email,
+          phone,
+          service,
+          message,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Submission failed");
+      }
       setSubmitted(true);
+    } catch {
+      setSubmitError(
+        `Something went wrong sending your message. Please email us directly at ${siteConfig.emails.info}.`
+      );
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -125,8 +166,10 @@ export default function ContactForm() {
         {errors.message && <p className="mt-1.5 text-xs text-red-600">{errors.message}</p>}
       </div>
 
-      <Button type="submit" className="w-full sm:w-auto">
-        Send message
+      {submitError && <p className="text-sm text-red-600">{submitError}</p>}
+
+      <Button type="submit" className="w-full sm:w-auto" disabled={submitting}>
+        {submitting ? "Sending…" : "Send message"}
       </Button>
     </form>
   );

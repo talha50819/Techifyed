@@ -24,10 +24,10 @@ that implies for the key).
 npm run build
 ```
 
-Generates a static `out/` folder — plain HTML/CSS/JS, no server
+Generates a static `dist/` folder — plain HTML/CSS/JS, no server
 required. Preview it locally with `npm run preview`.
 
 ## Deployment
 
-Upload the contents of `out/` to Hostinger's `public_html`. See
+Upload the contents of `dist/` to Hostinger's `public_html`. See
 [DEPLOYMENT.md](./DEPLOYMENT.md) for the exact steps.

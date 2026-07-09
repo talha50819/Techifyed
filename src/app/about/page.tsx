@@ -1,15 +1,24 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import { Target, HeartHandshake, Layers, Rocket } from "lucide-react";
+import {
+  Target,
+  HeartHandshake,
+  Layers,
+  Rocket,
+  Handshake,
+  MessagesSquare,
+  Award,
+  CircleCheckBig,
+} from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/CTASection";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "About Us",
   description:
     "Learn about Techifyed's mission, values, and approach to building digital products for growing businesses.",
-};
+  path: "/about/",
+});
 
 const values = [
   {
@@ -35,6 +44,66 @@ const values = [
     title: "Built to last",
     description:
       "We favor solid, maintainable foundations over quick hacks that create problems later.",
+  },
+];
+
+const cultureItems = [
+  {
+    icon: Handshake,
+    title: "Collaboration first",
+    description:
+      "You're looped into decisions as they happen, not handed a finished deliverable and a bill.",
+  },
+  {
+    icon: MessagesSquare,
+    title: "Clear communication",
+    description:
+      "Regular check-ins and plain-language updates — no jargon dumps or radio silence between milestones.",
+  },
+  {
+    icon: Award,
+    title: "Craft over shortcuts",
+    description:
+      "We'd rather take an extra day and get the details right than ship something we'd need to redo.",
+  },
+  {
+    icon: CircleCheckBig,
+    title: "Follow-through",
+    description:
+      "Launch day isn't the finish line — we stick around to make sure what we built keeps working.",
+  },
+];
+
+const aboutFaqs = [
+  {
+    question: "What makes Techifyed different from a bigger agency?",
+    answer:
+      "You work directly with the people doing the design, engineering, and strategy work — not routed through layers of account management. Fewer hand-offs means faster, clearer decisions.",
+  },
+  {
+    question: "Who will I actually be working with?",
+    answer:
+      "One dedicated point of contact coordinates the specialists on your project, so you're not chasing different people for different parts of the work.",
+  },
+  {
+    question: "Can we start with a smaller project first?",
+    answer:
+      "Yes. Plenty of relationships start with a scoped, smaller engagement — an audit, a redesign, a single feature — before growing into a larger partnership.",
+  },
+  {
+    question: "Do you only work with tech companies?",
+    answer:
+      "No — we work across healthcare, retail, real estate, education, hospitality, and more. If your business needs digital work done well, we can likely help.",
+  },
+  {
+    question: "Is Techifyed a good fit for early-stage startups?",
+    answer:
+      "We work with businesses at every stage, from early-stage startups validating an idea to established companies modernizing existing systems.",
+  },
+  {
+    question: "How do you handle communication throughout a project?",
+    answer:
+      "Regular check-ins, clear milestones, and a single point of contact — you'll always know what's shipped, what's next, and who to ask.",
   },
 ];
 
@@ -80,12 +149,13 @@ export default function AboutPage() {
             </div>
             <div className="space-y-4">
               <div className="relative h-56 overflow-hidden rounded-2xl sm:h-64">
-                <Image
-                  src="/images/about/workspace.jpg"
-                  alt="A collaborative workspace"
-                  fill
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover"
+                <video
+                  className="h-full w-full object-cover"
+                  src="/videos/about-workspace.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -116,13 +186,38 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      <section className="bg-primary-50/60 py-20 sm:py-28">
+        <Container>
+          <SectionHeading
+            eyebrow="How we work together"
+            title="What it's actually like to work with us"
+          />
+          <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {cultureItems.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl gradient-brand text-white">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 className="mt-5 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)]">
+                  {title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">
+                  {description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       <section className="relative isolate flex min-h-[320px] items-center overflow-hidden">
-        <Image
-          src="/images/about/focus.jpg"
-          alt="Focused, detail-oriented work"
-          fill
-          sizes="100vw"
-          className="-z-10 object-cover"
+        <video
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          src="/videos/focus-work.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
         />
         <div className="absolute inset-0 -z-10 bg-primary-950/75" />
         <Container className="py-16 text-center">
@@ -146,6 +241,53 @@ export default function AboutPage() {
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                   {description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="relative isolate flex min-h-[380px] items-center overflow-hidden">
+        <video
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          src="/videos/team-huddle.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="absolute inset-0 -z-10 bg-primary-950/80" />
+        <div className="absolute inset-0 -z-10 gradient-brand opacity-30 mix-blend-multiply" />
+        <Container className="py-16 text-center">
+          <span className="inline-block text-sm font-semibold tracking-wide text-primary-200 uppercase">
+            Small team, hands-on approach
+          </span>
+          <h2 className="mx-auto mt-3 max-w-2xl font-[family-name:var(--font-heading)] text-3xl font-bold text-white sm:text-4xl">
+            Every project gets real attention, start to finish
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-white/80">
+            No handing your work off to whoever&apos;s free — the people who
+            scope your project are the people who build it.
+          </p>
+        </Container>
+      </section>
+
+      <section className="py-20 sm:py-28">
+        <Container>
+          <SectionHeading
+            eyebrow="Questions"
+            title="Frequently asked questions"
+            description="Common questions about working with Techifyed."
+          />
+          <div className="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2">
+            {aboutFaqs.map(({ question, answer }) => (
+              <div key={question} className="rounded-2xl border border-neutral-200 p-6">
+                <h3 className="font-[family-name:var(--font-heading)] text-base font-semibold text-[var(--foreground)]">
+                  {question}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">
+                  {answer}
                 </p>
               </div>
             ))}

@@ -60,6 +60,102 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/custom-web-development-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  Web Development by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/mobile-app-development-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  Mobile App Development by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/ui-ux-design-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  UI/UX Design by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/graphic-design-branding-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  Branding by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/digital-marketing-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  Digital Marketing by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/ai-ml-solutions-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  AI/ML Solutions by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/content-creation-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  Content Creation by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/content-writing-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  Content Writing by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/software-development-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  Software Development by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/business-applications-enterprise-solutions-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  Enterprise Solutions by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cybersecurity-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  Cybersecurity by State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/it-consulting-services-usa"
+                  className="text-sm text-primary-200/80 transition-colors hover:text-white"
+                >
+                  IT Consulting by State
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -112,14 +208,30 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-primary-200/70 sm:flex-row">
-          <p>
-            &copy; {year} {siteConfig.name}. All rights reserved.
-          </p>
-          <div className="flex gap-6">
-            <span>{siteConfig.emails.sales}</span>
-            <span>{siteConfig.emails.support}</span>
-            <span>{siteConfig.emails.hr}</span>
+        <div className="mt-12 border-t border-white/10 pt-8 text-sm text-primary-200/70">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p>
+              &copy; {year} {siteConfig.name}. All rights reserved.
+            </p>
+            <div className="flex gap-6">
+              <span>{siteConfig.emails.sales}</span>
+              <span>{siteConfig.emails.support}</span>
+              <span>{siteConfig.emails.hr}</span>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-start">
+            <Link href="/privacy-policy/" className="hover:text-white">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-and-conditions/" className="hover:text-white">
+              Terms &amp; Conditions
+            </Link>
+            <Link href="/information-security-policy/" className="hover:text-white">
+              Information Security Policy
+            </Link>
+            <Link href="/compliance-policy-development/" className="hover:text-white">
+              Compliance Policy
+            </Link>
           </div>
         </div>
       </Container>

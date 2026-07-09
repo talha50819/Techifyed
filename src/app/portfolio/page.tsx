@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
-import Image from "next/image";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/CTASection";
 import { portfolioItems } from "@/data/portfolio";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "Portfolio",
   description:
     "A sample of Techifyed's work across web development, mobile apps, design, marketing, and AI.",
-};
+  path: "/portfolio/",
+});
 
 export default function PortfolioPage() {
   return (
@@ -17,6 +17,7 @@ export default function PortfolioPage() {
       <section className="bg-radial-fade py-20 sm:py-28">
         <Container>
           <SectionHeading
+            as="h1"
             eyebrow="Our work"
             title="A sample of what we build"
             description="Representative projects across our core service lines, illustrating the kind of work we take on."
@@ -33,12 +34,13 @@ export default function PortfolioPage() {
                 className="overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-shadow hover:shadow-lg"
               >
                 <div className="relative h-44 overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover"
+                  <video
+                    className="h-full w-full object-cover"
+                    src={item.video}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-40 mix-blend-multiply`}
