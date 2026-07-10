@@ -24,7 +24,7 @@ export default function InformationSecurityPolicyPage() {
           eyebrow="Legal"
           title="Information Security Policy"
         />
-        <p className="mt-4 text-sm text-neutral-400">Last updated: July 7, 2026</p>
+        <p className="mt-4 text-sm text-neutral-400">Last updated: July 10, 2026</p>
 
         <p className={p}>
           {siteConfig.name} takes reasonable, practical steps to protect
@@ -37,14 +37,14 @@ export default function InformationSecurityPolicyPage() {
 
         <h2 className={h2}>Website security</h2>
         <ul className={ul}>
-          <li>This site is served entirely over HTTPS.</li>
+          <li>This site is served entirely over HTTPS, encrypting data in transit.</li>
           <li>
             It is published as a static site, which minimizes server-side
             attack surface compared to a dynamic application.
           </li>
           <li>
             Access to the site&apos;s source code and hosting is restricted
-            to authorized team members.
+            to authorized team members, protected by unique credentials.
           </li>
         </ul>
 
@@ -58,6 +58,13 @@ export default function InformationSecurityPolicyPage() {
           for details on what we collect and how it&apos;s used.
         </p>
 
+        <h2 className={h2}>Access control and least privilege</h2>
+        <ul className={ul}>
+          <li>Access to systems and data is granted on a need-to-know, least-privilege basis.</li>
+          <li>Credentials are unique per person; shared logins are avoided.</li>
+          <li>Access is revoked promptly when a team member&apos;s role changes or ends.</li>
+        </ul>
+
         <h2 className={h2}>Security in client engagements</h2>
         <ul className={ul}>
           <li>Access controls and least-privilege practices on project systems.</li>
@@ -66,11 +73,22 @@ export default function InformationSecurityPolicyPage() {
           <li>Secure handling of credentials and client data — never stored or shared beyond what a project requires.</li>
         </ul>
 
-        <h2 className={h2}>Incident response</h2>
+        <h2 className={h2}>Team security awareness</h2>
+        <p className={p}>
+          Team members handling client or visitor data are made aware of
+          our data handling practices and expected to follow them,
+          including safe credential management and prompt reporting of
+          anything that looks like a security issue.
+        </p>
+
+        <h2 className={h2}>Incident and breach response</h2>
         <p className={p}>
           If we become aware of a security incident affecting client or
-          visitor data, we will investigate promptly and notify affected
-          parties in line with applicable legal requirements.
+          visitor data, we investigate promptly, contain the issue, and
+          notify affected parties and any required regulator without undue
+          delay and in line with applicable legal requirements (for
+          example, within 72 hours of becoming aware, where the GDPR&apos;s
+          notification timeline applies).
         </p>
 
         <h2 className={h2}>Reporting a concern</h2>

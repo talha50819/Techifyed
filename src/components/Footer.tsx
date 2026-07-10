@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
@@ -5,6 +7,7 @@ import Container from "./ui/Container";
 import { siteConfig } from "@/data/siteConfig";
 import { services } from "@/data/services";
 import { FacebookIcon, InstagramIcon, LinkedInIcon, XIcon } from "./SocialIcons";
+import { reopenCookiePreferences } from "./CookieConsent";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -116,10 +119,10 @@ export default function Footer() {
             <p>
               &copy; {year} {siteConfig.name}. All rights reserved.
             </p>
-            <div className="flex gap-6">
-              <span>{siteConfig.emails.sales}</span>
-              <span>{siteConfig.emails.support}</span>
-              <span>{siteConfig.emails.hr}</span>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
+              <span className="break-all">{siteConfig.emails.sales}</span>
+              <span className="break-all">{siteConfig.emails.support}</span>
+              <span className="break-all">{siteConfig.emails.hr}</span>
             </div>
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:justify-start">
@@ -135,6 +138,13 @@ export default function Footer() {
             <Link href="/compliance-policy-development/" className="hover:text-white">
               Compliance Policy
             </Link>
+            <button
+              type="button"
+              onClick={() => reopenCookiePreferences()}
+              className="hover:text-white"
+            >
+              Cookie Settings
+            </button>
           </div>
         </div>
       </Container>

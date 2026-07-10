@@ -12,13 +12,14 @@ export const metadata = buildMetadata({
 
 const h2 = "mt-10 font-[family-name:var(--font-heading)] text-xl font-semibold text-[var(--foreground)]";
 const p = "mt-3 leading-relaxed text-neutral-600";
+const ul = "mt-3 list-disc space-y-2 pl-5 leading-relaxed text-neutral-600";
 
 export default function CompliancePolicyPage() {
   return (
     <section className="py-20 sm:py-28">
       <Container className="max-w-3xl">
         <SectionHeading as="h1" align="left" eyebrow="Legal" title="Compliance Policy" />
-        <p className="mt-4 text-sm text-neutral-400">Last updated: July 7, 2026</p>
+        <p className="mt-4 text-sm text-neutral-400">Last updated: July 10, 2026</p>
 
         <p className={p}>
           Many of the businesses we work with operate under regulatory or
@@ -43,10 +44,21 @@ export default function CompliancePolicyPage() {
             IT Consulting
           </a>{" "}
           work, we help clients assess their current posture against
-          relevant frameworks (such as data privacy regulations like GDPR
-          or CCPA, or industry standards relevant to their sector),
-          identify gaps, and develop practical policies and controls to
-          close them.
+          relevant frameworks, identify gaps, and develop practical policies
+          and controls to close them.
+        </p>
+
+        <h2 className={h2}>Frameworks we commonly work with</h2>
+        <ul className={ul}>
+          <li><strong>Data privacy:</strong> GDPR (EU/UK), CCPA/CPRA (California)</li>
+          <li><strong>Payments:</strong> PCI-DSS</li>
+          <li><strong>Healthcare:</strong> HIPAA</li>
+          <li><strong>Information security management:</strong> ISO 27001, SOC 2</li>
+        </ul>
+        <p className={p}>
+          These are frameworks we help clients assess and build toward —
+          not certifications {siteConfig.name} itself holds, unless stated
+          in writing for a particular engagement.
         </p>
 
         <h2 className={h2}>Internal practices</h2>
@@ -62,6 +74,14 @@ export default function CompliancePolicyPage() {
           </a>
           . We do not claim certification against any specific compliance
           framework unless stated in writing for a particular engagement.
+        </p>
+
+        <h2 className={h2}>Data processing agreements</h2>
+        <p className={p}>
+          For engagements involving processing of personal data on a
+          client&apos;s behalf, we can enter into a data processing
+          agreement (DPA) or similar contractual terms on request, as part
+          of that engagement&apos;s written agreement.
         </p>
 
         <h2 className={h2}>Working within your regulatory context</h2>

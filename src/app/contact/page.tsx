@@ -90,11 +90,11 @@ export default function ContactPage() {
                     <h3 className="font-semibold text-[var(--foreground)]">Email</h3>
                     <ul className="mt-2 space-y-1.5">
                       {emailCards.map((item) => (
-                        <li key={item.email} className="flex items-center justify-between gap-3 text-sm">
-                          <span className="text-neutral-500">{item.label}</span>
+                        <li key={item.email} className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 text-sm">
+                          <span className="shrink-0 text-neutral-500">{item.label}</span>
                           <a
                             href={`mailto:${item.email}`}
-                            className="font-medium text-neutral-700 hover:text-primary-600"
+                            className="break-all font-medium text-neutral-700 hover:text-primary-600"
                           >
                             {item.email}
                           </a>

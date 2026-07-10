@@ -18,13 +18,21 @@ export default function TermsAndConditionsPage() {
     <section className="py-20 sm:py-28">
       <Container className="max-w-3xl">
         <SectionHeading as="h1" align="left" eyebrow="Legal" title="Terms and Conditions" />
-        <p className="mt-4 text-sm text-neutral-400">Last updated: July 7, 2026</p>
+        <p className="mt-4 text-sm text-neutral-400">Last updated: July 10, 2026</p>
 
         <p className={p}>
           These terms govern your use of techifyed.com. By using this
           website, you agree to them. They don&apos;t apply to services
           delivered under a signed client agreement or statement of work,
           which govern those engagements separately.
+        </p>
+
+        <h2 className={h2}>Eligibility</h2>
+        <p className={p}>
+          This website is intended for use by individuals acting on behalf
+          of a business, and for adults capable of forming a binding
+          contract in their jurisdiction. By using this site, you confirm
+          you meet that description.
         </p>
 
         <h2 className={h2}>Use of this website</h2>
@@ -66,6 +74,13 @@ export default function TermsAndConditionsPage() {
           arising from your use of this website.
         </p>
 
+        <h2 className={h2}>Indemnification</h2>
+        <p className={p}>
+          You agree to indemnify and hold {siteConfig.name} harmless from
+          any claims, damages, or expenses arising from your misuse of this
+          website or your violation of these terms.
+        </p>
+
         <h2 className={h2}>Third-party links and services</h2>
         <p className={p}>
           This site may link to or use third-party services (for example,
@@ -73,10 +88,42 @@ export default function TermsAndConditionsPage() {
           responsible for the content or practices of those third parties.
         </p>
 
+        <h2 className={h2}>Dispute resolution</h2>
+        <p className={p}>
+          If a dispute arises out of your use of this website, we encourage
+          you to contact us first at{" "}
+          <a
+            href={`mailto:${siteConfig.emails.info}`}
+            className="text-primary-600 hover:underline"
+          >
+            {siteConfig.emails.info}
+          </a>{" "}
+          so we can try to resolve it informally. If that doesn&apos;t
+          resolve the matter, any dispute will be handled under the
+          governing law and venue described below.
+        </p>
+
         <h2 className={h2}>Governing law</h2>
         <p className={p}>
           These terms are governed by the laws of the State of Florida,
           USA, without regard to conflict-of-law principles.
+        </p>
+
+        <h2 className={h2}>Severability</h2>
+        <p className={p}>
+          If any provision of these terms is found unenforceable, the
+          remaining provisions will continue in full force and effect.
+        </p>
+
+        <h2 className={h2}>Entire agreement</h2>
+        <p className={p}>
+          These terms, together with our{" "}
+          <a href="/privacy-policy/" className="text-primary-600 hover:underline">
+            Privacy Policy
+          </a>
+          , constitute the entire agreement between you and {siteConfig.name}{" "}
+          regarding use of this website, and supersede any prior
+          understanding about it.
         </p>
 
         <h2 className={h2}>Changes to these terms</h2>
