@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/CTASection";
@@ -29,13 +31,14 @@ export default function PortfolioPage() {
         <Container>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {portfolioItems.map((item) => (
-              <div
+              <Link
                 key={item.slug}
-                className="overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-shadow hover:shadow-lg"
+                href={`/portfolio/${item.slug}/`}
+                className="group overflow-hidden rounded-2xl border border-neutral-200 bg-white transition-all hover:-translate-y-1 hover:border-primary-200 hover:shadow-xl"
               >
                 <div className="relative h-44 overflow-hidden">
                   <video
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     src={item.video}
                     autoPlay
                     muted
@@ -50,12 +53,13 @@ export default function PortfolioPage() {
                   <span className="text-xs font-semibold tracking-wide text-primary-600 uppercase">
                     {item.category}
                   </span>
-                  <h3 className="mt-2 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)]">
+                  <h3 className="mt-2 flex items-center gap-1.5 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)]">
                     {item.title}
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-primary-500 opacity-0 transition-opacity group-hover:opacity-100" />
                   </h3>
                   <p className="mt-2 text-sm text-neutral-600">{item.blurb}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </Container>
