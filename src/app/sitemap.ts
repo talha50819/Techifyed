@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { services } from "@/data/services";
 import { subServicesByService } from "@/data/subServices";
+import { pairings } from "@/data/pairings";
 import { webDevStates } from "@/data/webDevStates";
 import { mobileAppStates } from "@/data/mobileAppStates";
 import { uiUxStates } from "@/data/uiUxStates";
@@ -79,6 +80,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       }))
   );
 
+  const pairingEntries = pairings.map((p) => ({
+    url: `${SITE_URL}/services/pairings/${p.slug}/`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
   const webDevEntries = buildLocationEntries(
     "custom-web-development-services",
     webDevStates,
@@ -140,6 +148,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...staticEntries,
     ...serviceEntries,
     ...subServiceEntries,
+    ...pairingEntries,
     ...webDevEntries,
     ...mobileAppEntries,
     ...uiUxEntries,

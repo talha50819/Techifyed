@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Plus } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -5,6 +6,7 @@ import ServiceCard from "@/components/ServiceCard";
 import ServiceIcon from "@/components/ServiceIcon";
 import CTASection from "@/components/CTASection";
 import { services, getServiceBySlug } from "@/data/services";
+import { pairings } from "@/data/pairings";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -13,25 +15,6 @@ export const metadata = buildMetadata({
     "Explore Techifyed's full range of services — web development, mobile apps, design, marketing, AI/ML, software, and more.",
   path: "/services/",
 });
-
-const pairings = [
-  {
-    slugs: ["web-development", "ui-ux-design"] as const,
-    blurb: "A site that looks right and works right, designed and built together.",
-  },
-  {
-    slugs: ["digital-marketing", "content-writing"] as const,
-    blurb: "Campaigns backed by copy written to actually convert.",
-  },
-  {
-    slugs: ["software-development", "cybersecurity-services"] as const,
-    blurb: "Systems built to scale — and built to hold up under scrutiny.",
-  },
-  {
-    slugs: ["ai-ml-solutions", "business-applications-enterprise-solutions"] as const,
-    blurb: "Automation and intelligence layered into the tools your team already uses.",
-  },
-];
 
 const serviceFaqs = [
   {
@@ -123,12 +106,13 @@ export default function ServicesPage() {
             description="Most projects don't fit into a single category — here are a few combinations we build often."
           />
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {pairings.map(({ slugs, blurb }) => {
-              const [first, second] = slugs.map((slug) => getServiceBySlug(slug)!);
+            {pairings.map(({ slug, slugs, blurb }) => {
+              const [first, second] = slugs.map((s) => getServiceBySlug(s)!);
               return (
-                <div
-                  key={slugs.join("-")}
-                  className="rounded-2xl border border-neutral-200 bg-white p-6"
+                <Link
+                  key={slug}
+                  href={`/services/pairings/${slug}/`}
+                  className="group rounded-2xl border border-neutral-200 bg-white p-6 transition-colors hover:border-primary-300"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
@@ -139,13 +123,13 @@ export default function ServicesPage() {
                       <ServiceIcon icon={second.icon} className="h-5 w-5" />
                     </div>
                   </div>
-                  <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)]">
+                  <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)] group-hover:text-primary-600">
                     {first.title} + {second.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                     {blurb}
                   </p>
-                </div>
+                </Link>
               );
             })}
           </div>
