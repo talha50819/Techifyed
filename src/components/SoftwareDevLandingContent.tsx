@@ -24,8 +24,8 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/CTASection";
-import { softwareDevStates } from "@/data/softwareDevStates";
 import { SITE_URL } from "@/lib/seo";
+import { slugify } from "@/lib/slugify";
 
 const subServices = [
   {
@@ -171,12 +171,14 @@ const faqs = [
 type SoftwareDevLandingContentProps = {
   h1: string;
   heroLine: string;
-  regionName: string;
-  regionSlug: string;
+  regionName?: string;
+  regionSlug?: string;
   localAngle?: string;
   keywords?: string[];
   isHub?: boolean;
 };
+
+const SERVICE_SLUG = "software-development";
 
 export default function SoftwareDevLandingContent({
   h1,
@@ -193,13 +195,15 @@ export default function SoftwareDevLandingContent({
     serviceType: "Software Development Services",
     name: h1,
     description: heroLine,
-    url: `${SITE_URL}/software-development-services-${regionSlug}/`,
+    url: regionSlug
+      ? `${SITE_URL}/software-development-services-${regionSlug}/`
+      : `${SITE_URL}/services/${SERVICE_SLUG}/`,
     provider: {
       "@type": "ProfessionalService",
       name: "Techifyed",
       url: SITE_URL,
     },
-    areaServed: isHub ? "US" : regionName,
+    areaServed: regionName ? (isHub ? "US" : regionName) : undefined,
   };
 
   const breadcrumbSchema = {
@@ -212,7 +216,9 @@ export default function SoftwareDevLandingContent({
         "@type": "ListItem",
         position: 3,
         name: h1,
-        item: `${SITE_URL}/software-development-services-${regionSlug}/`,
+        item: regionSlug
+          ? `${SITE_URL}/software-development-services-${regionSlug}/`
+          : `${SITE_URL}/services/${SERVICE_SLUG}/`,
       },
     ],
   };
@@ -236,11 +242,19 @@ export default function SoftwareDevLandingContent({
               Services
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/services/software-development" className="hover:text-primary-600">
-              Software Development
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-neutral-700">{regionName}</span>
+            {regionName ? (
+              <Link href="/services/software-development" className="hover:text-primary-600">
+                Software Development
+              </Link>
+            ) : (
+              <span className="text-neutral-700">Software Development</span>
+            )}
+            {regionName && (
+              <>
+                <span className="mx-2">/</span>
+                <span className="text-neutral-700">{regionName}</span>
+              </>
+            )}
           </nav>
           <div className="mt-8 max-w-3xl">
             <h1 className="font-[family-name:var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
@@ -340,17 +354,21 @@ export default function SoftwareDevLandingContent({
           />
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {subServices.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="rounded-2xl border border-neutral-200 bg-white p-6">
+              <Link
+                key={title}
+                href={`/services/${SERVICE_SLUG}/${slugify(title)}/`}
+                className="group rounded-2xl border border-neutral-200 bg-white p-6 transition-colors hover:border-primary-300"
+              >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)]">
+                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)] group-hover:text-primary-600">
                   {title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                   {description}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </Container>
@@ -532,31 +550,8 @@ export default function SoftwareDevLandingContent({
         </Container>
       </section>
 
-      {/* States index (hub page only) */}
-      {isHub && (
-        <section className="py-20 sm:py-28">
-          <Container>
-            <SectionHeading
-              eyebrow="Nationwide"
-              title="Software development services by state"
-              description="We build custom software for businesses across all 50 states — find your state below for local context on industries, keywords, and use cases."
-            />
-            <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
-              {softwareDevStates.map((state) => (
-                <Link
-                  key={state.slug}
-                  href={`/software-development-services-${state.slug}`}
-                  className="text-sm text-neutral-600 transition-colors hover:text-primary-600"
-                >
-                  {state.name}
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
 
-      {!isHub && (
+      {!isHub && regionSlug && (
         <section className="pb-4">
           <Container>
             <p className="text-center text-sm text-neutral-500">
@@ -588,7 +583,11 @@ export default function SoftwareDevLandingContent({
       </section>
 
       <CTASection
-        title={`Ready to build custom software for your ${regionName} business?`}
+        title={
+          regionName
+            ? `Ready to build custom software for your ${regionName} business?`
+            : "Ready to build custom software for your business?"
+        }
         description="Techifyed helps businesses build custom software, backend systems, and internal tools that run reliably, stay maintainable, and support real growth."
         primaryLabel="Book a Free Software Strategy Consultation"
         primaryHref="/contact"

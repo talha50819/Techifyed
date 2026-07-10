@@ -25,8 +25,8 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/CTASection";
-import { cybersecurityStates } from "@/data/cybersecurityStates";
 import { SITE_URL } from "@/lib/seo";
+import { slugify } from "@/lib/slugify";
 
 const subServices = [
   {
@@ -172,12 +172,14 @@ const faqs = [
 type CybersecurityLandingContentProps = {
   h1: string;
   heroLine: string;
-  regionName: string;
-  regionSlug: string;
+  regionName?: string;
+  regionSlug?: string;
   localAngle?: string;
   keywords?: string[];
   isHub?: boolean;
 };
+
+const SERVICE_SLUG = "cybersecurity-services";
 
 export default function CybersecurityLandingContent({
   h1,
@@ -194,13 +196,15 @@ export default function CybersecurityLandingContent({
     serviceType: "Cybersecurity Services",
     name: h1,
     description: heroLine,
-    url: `${SITE_URL}/cybersecurity-services-${regionSlug}/`,
+    url: regionSlug
+      ? `${SITE_URL}/cybersecurity-services-${regionSlug}/`
+      : `${SITE_URL}/services/${SERVICE_SLUG}/`,
     provider: {
       "@type": "ProfessionalService",
       name: "Techifyed",
       url: SITE_URL,
     },
-    areaServed: isHub ? "US" : regionName,
+    areaServed: regionName ? (isHub ? "US" : regionName) : undefined,
   };
 
   const breadcrumbSchema = {
@@ -213,7 +217,9 @@ export default function CybersecurityLandingContent({
         "@type": "ListItem",
         position: 3,
         name: h1,
-        item: `${SITE_URL}/cybersecurity-services-${regionSlug}/`,
+        item: regionSlug
+          ? `${SITE_URL}/cybersecurity-services-${regionSlug}/`
+          : `${SITE_URL}/services/${SERVICE_SLUG}/`,
       },
     ],
   };
@@ -237,11 +243,19 @@ export default function CybersecurityLandingContent({
               Services
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/services/cybersecurity-services" className="hover:text-primary-600">
-              Cybersecurity Services
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-neutral-700">{regionName}</span>
+            {regionName ? (
+              <Link href="/services/cybersecurity-services" className="hover:text-primary-600">
+                Cybersecurity Services
+              </Link>
+            ) : (
+              <span className="text-neutral-700">Cybersecurity Services</span>
+            )}
+            {regionName && (
+              <>
+                <span className="mx-2">/</span>
+                <span className="text-neutral-700">{regionName}</span>
+              </>
+            )}
           </nav>
           <div className="mt-8 max-w-3xl">
             <h1 className="font-[family-name:var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
@@ -341,17 +355,21 @@ export default function CybersecurityLandingContent({
           />
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {subServices.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="rounded-2xl border border-neutral-200 bg-white p-6">
+              <Link
+                key={title}
+                href={`/services/${SERVICE_SLUG}/${slugify(title)}/`}
+                className="group rounded-2xl border border-neutral-200 bg-white p-6 transition-colors hover:border-primary-300"
+              >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)]">
+                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)] group-hover:text-primary-600">
                   {title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                   {description}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </Container>
@@ -535,31 +553,8 @@ export default function CybersecurityLandingContent({
         </Container>
       </section>
 
-      {/* States index (hub page only) */}
-      {isHub && (
-        <section className="py-20 sm:py-28">
-          <Container>
-            <SectionHeading
-              eyebrow="Nationwide"
-              title="Cybersecurity services by state"
-              description="We run security assessments for businesses across all 50 states — find your state below for local context on industries, keywords, and use cases."
-            />
-            <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
-              {cybersecurityStates.map((state) => (
-                <Link
-                  key={state.slug}
-                  href={`/cybersecurity-services-${state.slug}`}
-                  className="text-sm text-neutral-600 transition-colors hover:text-primary-600"
-                >
-                  {state.name}
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
 
-      {!isHub && (
+      {!isHub && regionSlug && (
         <section className="pb-4">
           <Container>
             <p className="text-center text-sm text-neutral-500">
@@ -591,7 +586,11 @@ export default function CybersecurityLandingContent({
       </section>
 
       <CTASection
-        title={`Ready to reduce security risk for your ${regionName} business?`}
+        title={
+          regionName
+            ? `Ready to reduce security risk for your ${regionName} business?`
+            : "Ready to reduce security risk for your business?"
+        }
         description="Techifyed helps businesses run security audits, hardening, and ongoing monitoring that protect what you've already built."
         primaryLabel="Book a Free Security Strategy Consultation"
         primaryHref="/contact"

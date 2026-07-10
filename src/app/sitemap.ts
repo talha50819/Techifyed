@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { services } from "@/data/services";
+import { subServicesByService } from "@/data/subServices";
 import { webDevStates } from "@/data/webDevStates";
 import { mobileAppStates } from "@/data/mobileAppStates";
 import { uiUxStates } from "@/data/uiUxStates";
@@ -68,6 +69,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const subServiceEntries = Object.entries(subServicesByService).flatMap(
+    ([serviceSlug, subs]) =>
+      subs.map((sub) => ({
+        url: `${SITE_URL}/services/${serviceSlug}/${sub.slug}/`,
+        lastModified: now,
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      }))
+  );
+
   const webDevEntries = buildLocationEntries(
     "custom-web-development-services",
     webDevStates,
@@ -128,6 +139,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...staticEntries,
     ...serviceEntries,
+    ...subServiceEntries,
     ...webDevEntries,
     ...mobileAppEntries,
     ...uiUxEntries,

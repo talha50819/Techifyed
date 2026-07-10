@@ -25,8 +25,8 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/CTASection";
-import { marketingStates } from "@/data/marketingStates";
 import { SITE_URL } from "@/lib/seo";
+import { slugify } from "@/lib/slugify";
 
 const subServices = [
   {
@@ -172,12 +172,14 @@ const faqs = [
 type MarketingLandingContentProps = {
   h1: string;
   heroLine: string;
-  regionName: string;
-  regionSlug: string;
+  regionName?: string;
+  regionSlug?: string;
   localAngle?: string;
   keywords?: string[];
   isHub?: boolean;
 };
+
+const SERVICE_SLUG = "digital-marketing";
 
 export default function MarketingLandingContent({
   h1,
@@ -194,13 +196,15 @@ export default function MarketingLandingContent({
     serviceType: "Digital Marketing Services",
     name: h1,
     description: heroLine,
-    url: `${SITE_URL}/digital-marketing-services-${regionSlug}/`,
+    url: regionSlug
+      ? `${SITE_URL}/digital-marketing-services-${regionSlug}/`
+      : `${SITE_URL}/services/${SERVICE_SLUG}/`,
     provider: {
       "@type": "ProfessionalService",
       name: "Techifyed",
       url: SITE_URL,
     },
-    areaServed: isHub ? "US" : regionName,
+    areaServed: regionName ? (isHub ? "US" : regionName) : undefined,
   };
 
   const breadcrumbSchema = {
@@ -213,7 +217,9 @@ export default function MarketingLandingContent({
         "@type": "ListItem",
         position: 3,
         name: h1,
-        item: `${SITE_URL}/digital-marketing-services-${regionSlug}/`,
+        item: regionSlug
+          ? `${SITE_URL}/digital-marketing-services-${regionSlug}/`
+          : `${SITE_URL}/services/${SERVICE_SLUG}/`,
       },
     ],
   };
@@ -237,11 +243,19 @@ export default function MarketingLandingContent({
               Services
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/services/digital-marketing" className="hover:text-primary-600">
-              Digital Marketing
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-neutral-700">{regionName}</span>
+            {regionName ? (
+              <Link href="/services/digital-marketing" className="hover:text-primary-600">
+                Digital Marketing
+              </Link>
+            ) : (
+              <span className="text-neutral-700">Digital Marketing</span>
+            )}
+            {regionName && (
+              <>
+                <span className="mx-2">/</span>
+                <span className="text-neutral-700">{regionName}</span>
+              </>
+            )}
           </nav>
           <div className="mt-8 max-w-3xl">
             <h1 className="font-[family-name:var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
@@ -340,17 +354,21 @@ export default function MarketingLandingContent({
           />
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {subServices.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="rounded-2xl border border-neutral-200 bg-white p-6">
+              <Link
+                key={title}
+                href={`/services/${SERVICE_SLUG}/${slugify(title)}/`}
+                className="group rounded-2xl border border-neutral-200 bg-white p-6 transition-colors hover:border-primary-300"
+              >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)]">
+                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)] group-hover:text-primary-600">
                   {title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                   {description}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </Container>
@@ -534,31 +552,8 @@ export default function MarketingLandingContent({
         </Container>
       </section>
 
-      {/* States index (hub page only) */}
-      {isHub && (
-        <section className="py-20 sm:py-28">
-          <Container>
-            <SectionHeading
-              eyebrow="Nationwide"
-              title="Digital marketing services by state"
-              description="We run marketing campaigns for businesses across all 50 states — find your state below for local context on industries, keywords, and use cases."
-            />
-            <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
-              {marketingStates.map((state) => (
-                <Link
-                  key={state.slug}
-                  href={`/digital-marketing-services-${state.slug}`}
-                  className="text-sm text-neutral-600 transition-colors hover:text-primary-600"
-                >
-                  {state.name}
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
 
-      {!isHub && (
+      {!isHub && regionSlug && (
         <section className="pb-4">
           <Container>
             <p className="text-center text-sm text-neutral-500">
@@ -590,7 +585,11 @@ export default function MarketingLandingContent({
       </section>
 
       <CTASection
-        title={`Ready to grow your ${regionName} business with digital marketing?`}
+        title={
+          regionName
+            ? `Ready to grow your ${regionName} business with digital marketing?`
+            : "Ready to grow your business with digital marketing?"
+        }
         description="Techifyed helps businesses run SEO, paid media, email, and conversion campaigns that look professional, track clearly, and support real growth."
         primaryLabel="Book a Free Marketing Strategy Consultation"
         primaryHref="/contact"

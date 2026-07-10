@@ -1,13 +1,139 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { Check, ArrowRight } from "lucide-react";
-import Container from "@/components/ui/Container";
-import Button from "@/components/ui/Button";
-import CTASection from "@/components/CTASection";
-import ServiceIcon from "@/components/ServiceIcon";
-import { services, getServiceBySlug } from "@/data/services";
-import { buildMetadata, SITE_URL } from "@/lib/seo";
+import { services } from "@/data/services";
+import { buildMetadata } from "@/lib/seo";
+import WebDevLandingContent from "@/components/WebDevLandingContent";
+import MobileAppLandingContent from "@/components/MobileAppLandingContent";
+import UiUxLandingContent from "@/components/UiUxLandingContent";
+import BrandingLandingContent from "@/components/BrandingLandingContent";
+import MarketingLandingContent from "@/components/MarketingLandingContent";
+import AiMlLandingContent from "@/components/AiMlLandingContent";
+import ContentCreationLandingContent from "@/components/ContentCreationLandingContent";
+import ContentWritingLandingContent from "@/components/ContentWritingLandingContent";
+import SoftwareDevLandingContent from "@/components/SoftwareDevLandingContent";
+import EnterpriseLandingContent from "@/components/EnterpriseLandingContent";
+import CybersecurityLandingContent from "@/components/CybersecurityLandingContent";
+import ItConsultingLandingContent from "@/components/ItConsultingLandingContent";
+
+const serviceContent: Record<
+  string,
+  {
+    Component: (props: { h1: string; heroLine: string }) => React.JSX.Element;
+    metaTitle: string;
+    metaDescription: string;
+    h1: string;
+    heroLine: string;
+  }
+> = {
+  "web-development": {
+    Component: WebDevLandingContent,
+    metaTitle: "Custom Web Development Services",
+    metaDescription:
+      "Techifyed provides custom web development services, including website design, WordPress development, React, Next.js, Node.js, e-commerce websites, web applications, Figma to development, integrations, SEO, security, and ongoing website support.",
+    h1: "Custom Web Development Services — Built for Businesses That Want More Than a Basic Website",
+    heroLine:
+      "Your website should not just look modern. It should load fast, explain your value clearly, build trust, convert visitors, and support your business as it grows. Techifyed helps businesses build custom websites, e-commerce stores, landing pages, business portals, and web applications with strategy, design, development, integrations, performance, security, and support under one roof.",
+  },
+  "mobile-app-development": {
+    Component: MobileAppLandingContent,
+    metaTitle: "Mobile App Development Services",
+    metaDescription:
+      "Techifyed provides mobile app development services, including iOS app development, Android app development, React Native, Flutter, app UI/UX design, app store deployment, backend & API integration, and ongoing app support.",
+    h1: "Mobile App Development Services — Built for Businesses That Want Apps Users Actually Keep",
+    heroLine:
+      "Your app should not just look good in a demo. It should launch on both stores, run reliably, keep users engaged, and support your business as it grows. Techifyed helps businesses build custom iOS, Android, and cross-platform apps with strategy, design, development, integrations, performance, security, and support under one roof.",
+  },
+  "ui-ux-design": {
+    Component: UiUxLandingContent,
+    metaTitle: "UI/UX Design Services",
+    metaDescription:
+      "Techifyed provides UI/UX design services, including user research, wireframing, prototyping, visual design, design systems, usability testing, accessibility (WCAG) reviews, and Figma-based design handoff.",
+    h1: "UI/UX Design Services — Interfaces Built Around How People Actually Use Them",
+    heroLine:
+      "Your product should not just look good in a portfolio shot. It should be easy to understand, easy to navigate, and built to convert and retain real users. Techifyed helps businesses design research-driven interfaces, design systems, and product experiences with strategy, usability, accessibility, and developer-ready handoff under one roof.",
+  },
+  "graphic-design-branding": {
+    Component: BrandingLandingContent,
+    metaTitle: "Graphic Design & Branding Services",
+    metaDescription:
+      "Techifyed provides graphic design and branding services, including logo design, brand identity systems, brand guidelines, marketing collateral, packaging design, and social media design kits.",
+    h1: "Graphic Design & Branding Services — Visual Identities Built to Make Your Business Memorable",
+    heroLine:
+      "Your brand should not just look nice on one page. It should stay consistent across your logo, website, packaging, and every piece of marketing your business puts out. Techifyed helps businesses build brand identities, guidelines, and collateral with strategy, design, and long-term consistency under one roof.",
+  },
+  "digital-marketing": {
+    Component: MarketingLandingContent,
+    metaTitle: "Digital Marketing Services",
+    metaDescription:
+      "Techifyed provides digital marketing services, including SEO, paid search and social advertising, email marketing automation, social media management, conversion rate optimization, and analytics reporting.",
+    h1: "Digital Marketing Services — Growth Built on Strategy, Not Guesswork",
+    heroLine:
+      "Your marketing should not just generate impressions. It should bring qualified leads, track clearly to revenue, and improve month over month. Techifyed helps businesses run SEO, paid media, email, and conversion campaigns with strategy, tracking, and honest reporting under one roof.",
+  },
+  "ai-ml-solutions": {
+    Component: AiMlLandingContent,
+    metaTitle: "AI/ML Solutions",
+    metaDescription:
+      "Techifyed provides AI and machine learning solutions, including AI chatbots, LLM and RAG application development, process automation, custom model development, data pipelines, and AI model monitoring.",
+    h1: "AI/ML Solutions — Practical AI Built Around Your Business Data",
+    heroLine:
+      "Your AI feature should not just impress in a demo. It should run reliably in production, stay grounded in your real data, and keep working after launch. Techifyed helps businesses build AI chatbots, automation, and custom models with strategy, engineering, and ongoing monitoring under one roof.",
+  },
+  "content-creation": {
+    Component: ContentCreationLandingContent,
+    metaTitle: "Content Creation Services",
+    metaDescription:
+      "Techifyed provides content creation services, including video production, product and brand photography, social media content, short-form video, motion graphics, and content repurposing.",
+    h1: "Content Creation Services — Photo & Video Content Built to Capture Attention and Stay On-Brand",
+    heroLine:
+      "Your content should not just fill a calendar. It should look professional, sound like your brand, and get repurposed across every channel instead of being used once and forgotten. Techifyed helps businesses produce video, photography, and social content with strategy, production, and repurposing under one roof.",
+  },
+  "content-writing": {
+    Component: ContentWritingLandingContent,
+    metaTitle: "Content Writing Services",
+    metaDescription:
+      "Techifyed provides content writing services, including website copywriting, blog and article writing, SEO content strategy, email and campaign copy, technical documentation, and editing and proofreading.",
+    h1: "Content Writing Services — Copy That Reads Clearly and Ranks on Purpose",
+    heroLine:
+      "Your content should not just fill a page. It should read clearly, sound like your brand, and target the keywords your customers are actually searching. Techifyed helps businesses write website copy, blog content, and documentation with research, SEO structure, and editorial rigor under one roof.",
+  },
+  "software-development": {
+    Component: SoftwareDevLandingContent,
+    metaTitle: "Software Development Services",
+    metaDescription:
+      "Techifyed provides custom software development services, including software architecture and design, backend and API development, cloud infrastructure and DevOps, legacy system modernization, QA and automated testing, and long-term technical support.",
+    h1: "Software Development Services — Custom Software Built Around How Your Business Actually Works",
+    heroLine:
+      "Your software should not just work on launch day. It should stay reliable, stay maintainable, and keep supporting your business as it grows and changes. Techifyed helps businesses build custom software, backend systems, and internal tools with architecture, testing, and long-term support under one roof.",
+  },
+  "business-applications-enterprise-solutions": {
+    Component: EnterpriseLandingContent,
+    metaTitle: "Business Applications & Enterprise Solutions",
+    metaDescription:
+      "Techifyed provides business applications and enterprise solutions, including custom CRM and ERP systems, internal dashboards, workflow automation, system integrations, role-based access control, and data migration and reporting.",
+    h1: "Business Applications & Enterprise Solutions — Systems That Scale With Your Operations",
+    heroLine:
+      "Your business systems should not force your team into a rigid workflow. They should match how your organization actually operates, and keep working as you add locations, teams, and complexity. Techifyed helps companies build CRMs, ERPs, and internal systems with process mapping, clean architecture, and structured rollouts under one roof.",
+  },
+  "cybersecurity-services": {
+    Component: CybersecurityLandingContent,
+    metaTitle: "Cybersecurity Services",
+    metaDescription:
+      "Techifyed provides cybersecurity services, including security audits and vulnerability assessments, application and infrastructure hardening, authorized penetration testing, compliance readiness support, incident response planning, and security monitoring.",
+    h1: "Cybersecurity Services — Practical Security Built to Protect What You've Already Built",
+    heroLine:
+      "Your security program should not just be a scan report that sits unread. It should identify real risk, prioritize what to fix first, and keep watching after the first assessment is done. Techifyed helps businesses run audits, hardening, and ongoing monitoring with clear reporting and long-term support under one roof.",
+  },
+  "it-consulting": {
+    Component: ItConsultingLandingContent,
+    metaTitle: "IT Consulting Services",
+    metaDescription:
+      "Techifyed provides IT consulting services, including technology strategy and roadmapping, vendor and tooling evaluation, cloud and infrastructure planning, technical due diligence, team augmentation, and digital transformation planning.",
+    h1: "IT Consulting Services — Practical Technology Strategy Built Around Your Roadmap",
+    heroLine:
+      "Your technology roadmap should not just live in a slide deck. It should reflect your real budget, team capacity, and timeline, and someone should stay involved to help you actually execute it. Techifyed helps businesses plan technology strategy, evaluate vendors, and implement roadmaps with vendor-neutral, hands-on advisory support.",
+  },
+};
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -19,12 +145,12 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
-  if (!service) return {};
+  const content = serviceContent[slug];
+  if (!content) return {};
   return buildMetadata({
-    title: service.title,
-    description: service.longDesc,
-    path: `/services/${service.slug}/`,
+    title: content.metaTitle,
+    description: content.metaDescription,
+    path: `/services/${slug}/`,
   });
 }
 
@@ -34,218 +160,9 @@ export default async function ServiceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
-  if (!service) notFound();
+  const content = serviceContent[slug];
+  if (!content) notFound();
 
-  const related = services
-    .filter((s) => s.slug !== service.slug)
-    .slice(0, 3);
-
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    serviceType: service.title,
-    name: service.title,
-    description: service.longDesc,
-    url: `${SITE_URL}/services/${service.slug}/`,
-    provider: {
-      "@type": "ProfessionalService",
-      name: "Techifyed",
-      url: SITE_URL,
-    },
-    areaServed: "US",
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Services",
-        item: `${SITE_URL}/services/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: service.title,
-        item: `${SITE_URL}/services/${service.slug}/`,
-      },
-    ],
-  };
-
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <section className="bg-radial-fade py-20 sm:py-28">
-        <Container>
-          <nav className="text-sm text-neutral-500">
-            <Link href="/services" className="hover:text-primary-600">
-              Services
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-neutral-700">{service.title}</span>
-          </nav>
-
-          <div className="mt-8 flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-2xl">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl gradient-brand text-white">
-                <ServiceIcon icon={service.icon} className="h-7 w-7" />
-              </div>
-              <h1 className="mt-6 font-[family-name:var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
-                {service.title}
-              </h1>
-              <p className="mt-5 text-lg text-neutral-600">{service.longDesc}</p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Button href="/contact">
-                  Start a project <ArrowRight className="h-4 w-4" />
-                </Button>
-                {service.slug === "web-development" && (
-                  <Button href="/custom-web-development-services-usa" variant="secondary">
-                    See USA web development services
-                  </Button>
-                )}
-                {service.slug === "mobile-app-development" && (
-                  <Button href="/mobile-app-development-services-usa" variant="secondary">
-                    See USA mobile app development services
-                  </Button>
-                )}
-                {service.slug === "ui-ux-design" && (
-                  <Button href="/ui-ux-design-services-usa" variant="secondary">
-                    See USA UI/UX design services
-                  </Button>
-                )}
-                {service.slug === "graphic-design-branding" && (
-                  <Button href="/graphic-design-branding-services-usa" variant="secondary">
-                    See USA branding services
-                  </Button>
-                )}
-                {service.slug === "digital-marketing" && (
-                  <Button href="/digital-marketing-services-usa" variant="secondary">
-                    See USA digital marketing services
-                  </Button>
-                )}
-                {service.slug === "ai-ml-solutions" && (
-                  <Button href="/ai-ml-solutions-usa" variant="secondary">
-                    See USA AI/ML solutions
-                  </Button>
-                )}
-                {service.slug === "content-creation" && (
-                  <Button href="/content-creation-services-usa" variant="secondary">
-                    See USA content creation services
-                  </Button>
-                )}
-                {service.slug === "content-writing" && (
-                  <Button href="/content-writing-services-usa" variant="secondary">
-                    See USA content writing services
-                  </Button>
-                )}
-                {service.slug === "software-development" && (
-                  <Button href="/software-development-services-usa" variant="secondary">
-                    See USA software development services
-                  </Button>
-                )}
-                {service.slug === "business-applications-enterprise-solutions" && (
-                  <Button
-                    href="/business-applications-enterprise-solutions-usa"
-                    variant="secondary"
-                  >
-                    See USA business applications & enterprise solutions
-                  </Button>
-                )}
-                {service.slug === "cybersecurity-services" && (
-                  <Button href="/cybersecurity-services-usa" variant="secondary">
-                    See USA cybersecurity services
-                  </Button>
-                )}
-                {service.slug === "it-consulting" && (
-                  <Button href="/it-consulting-services-usa" variant="secondary">
-                    See USA IT consulting services
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-20 sm:py-28">
-        <Container>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            <div>
-              <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight text-[var(--foreground)]">
-                What&apos;s included
-              </h2>
-              <ul className="mt-6 space-y-4">
-                {service.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-700">
-                      <Check className="h-3.5 w-3.5" />
-                    </span>
-                    <span className="text-neutral-700">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight text-[var(--foreground)]">
-                Our process
-              </h2>
-              <div className="mt-6 space-y-6">
-                {service.processSteps.map((step, index) => (
-                  <div key={step.title} className="flex gap-4">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-50 font-[family-name:var(--font-heading)] text-sm font-bold text-primary-700">
-                      {index + 1}
-                    </span>
-                    <div>
-                      <h3 className="font-semibold text-[var(--foreground)]">{step.title}</h3>
-                      <p className="mt-1 text-sm text-neutral-600">{step.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-primary-50/60 py-20 sm:py-28">
-        <Container>
-          <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight text-[var(--foreground)]">
-            Related services
-          </h2>
-          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {related.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/services/${s.slug}`}
-                className="group rounded-2xl border border-neutral-200 bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-lg"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-primary-600">
-                  <ServiceIcon icon={s.icon} className="h-5 w-5" />
-                </div>
-                <h3 className="mt-4 font-semibold text-[var(--foreground)]">{s.title}</h3>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600">
-                  Learn more
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <CTASection />
-    </>
-  );
+  const { Component, h1, heroLine } = content;
+  return <Component h1={h1} heroLine={heroLine} />;
 }

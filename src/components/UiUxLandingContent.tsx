@@ -26,8 +26,8 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/CTASection";
-import { uiUxStates } from "@/data/uiUxStates";
 import { SITE_URL } from "@/lib/seo";
+import { slugify } from "@/lib/slugify";
 
 const subServices = [
   {
@@ -173,12 +173,14 @@ const faqs = [
 type UiUxLandingContentProps = {
   h1: string;
   heroLine: string;
-  regionName: string;
-  regionSlug: string;
+  regionName?: string;
+  regionSlug?: string;
   localAngle?: string;
   keywords?: string[];
   isHub?: boolean;
 };
+
+const SERVICE_SLUG = "ui-ux-design";
 
 export default function UiUxLandingContent({
   h1,
@@ -195,13 +197,15 @@ export default function UiUxLandingContent({
     serviceType: "UI/UX Design Services",
     name: h1,
     description: heroLine,
-    url: `${SITE_URL}/ui-ux-design-services-${regionSlug}/`,
+    url: regionSlug
+      ? `${SITE_URL}/ui-ux-design-services-${regionSlug}/`
+      : `${SITE_URL}/services/${SERVICE_SLUG}/`,
     provider: {
       "@type": "ProfessionalService",
       name: "Techifyed",
       url: SITE_URL,
     },
-    areaServed: isHub ? "US" : regionName,
+    areaServed: regionName ? (isHub ? "US" : regionName) : undefined,
   };
 
   const breadcrumbSchema = {
@@ -214,7 +218,9 @@ export default function UiUxLandingContent({
         "@type": "ListItem",
         position: 3,
         name: h1,
-        item: `${SITE_URL}/ui-ux-design-services-${regionSlug}/`,
+        item: regionSlug
+          ? `${SITE_URL}/ui-ux-design-services-${regionSlug}/`
+          : `${SITE_URL}/services/${SERVICE_SLUG}/`,
       },
     ],
   };
@@ -238,11 +244,19 @@ export default function UiUxLandingContent({
               Services
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/services/ui-ux-design" className="hover:text-primary-600">
-              UI/UX Design
-            </Link>
-            <span className="mx-2">/</span>
-            <span className="text-neutral-700">{regionName}</span>
+            {regionName ? (
+              <Link href="/services/ui-ux-design" className="hover:text-primary-600">
+                UI/UX Design
+              </Link>
+            ) : (
+              <span className="text-neutral-700">UI/UX Design</span>
+            )}
+            {regionName && (
+              <>
+                <span className="mx-2">/</span>
+                <span className="text-neutral-700">{regionName}</span>
+              </>
+            )}
           </nav>
           <div className="mt-8 max-w-3xl">
             <h1 className="font-[family-name:var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
@@ -343,17 +357,21 @@ export default function UiUxLandingContent({
           />
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {subServices.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="rounded-2xl border border-neutral-200 bg-white p-6">
+              <Link
+                key={title}
+                href={`/services/${SERVICE_SLUG}/${slugify(title)}/`}
+                className="group rounded-2xl border border-neutral-200 bg-white p-6 transition-colors hover:border-primary-300"
+              >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)]">
+                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-semibold text-[var(--foreground)] group-hover:text-primary-600">
                   {title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                   {description}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </Container>
@@ -537,31 +555,8 @@ export default function UiUxLandingContent({
         </Container>
       </section>
 
-      {/* States index (hub page only) */}
-      {isHub && (
-        <section className="py-20 sm:py-28">
-          <Container>
-            <SectionHeading
-              eyebrow="Nationwide"
-              title="UI/UX design services by state"
-              description="We design products for businesses across all 50 states — find your state below for local context on industries, keywords, and use cases."
-            />
-            <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
-              {uiUxStates.map((state) => (
-                <Link
-                  key={state.slug}
-                  href={`/ui-ux-design-services-${state.slug}`}
-                  className="text-sm text-neutral-600 transition-colors hover:text-primary-600"
-                >
-                  {state.name}
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
 
-      {!isHub && (
+      {!isHub && regionSlug && (
         <section className="pb-4">
           <Container>
             <p className="text-center text-sm text-neutral-500">
@@ -593,7 +588,11 @@ export default function UiUxLandingContent({
       </section>
 
       <CTASection
-        title={`Ready to design a better product for your ${regionName} business?`}
+        title={
+          regionName
+            ? `Ready to design a better product for your ${regionName} business?`
+            : "Ready to design a better product for your business?"
+        }
         description="Techifyed helps businesses design research-driven interfaces, design systems, and product experiences that look professional, work intuitively, and support real growth."
         primaryLabel="Book a Free UX Strategy Consultation"
         primaryHref="/contact"
