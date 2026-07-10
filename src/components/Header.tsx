@@ -15,18 +15,18 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200/80 bg-white/85 backdrop-blur-md">
-      <Container className="flex items-center justify-between py-6">
-        <Logo className="h-20" />
+      <Container className="flex items-center justify-between py-4">
+        <Logo className="h-14" />
 
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden items-center gap-6 lg:flex">
           <a
             href={`tel:${siteConfig.phoneHref}`}
-            className="flex items-center gap-2 text-3xl font-semibold text-neutral-700 hover:text-primary-600"
+            className="flex items-center gap-2 text-xl font-semibold text-neutral-700 hover:text-primary-600"
           >
-            <Phone className="h-9 w-9" />
+            <Phone className="h-6 w-6" />
             {siteConfig.phone}
           </a>
-          <Button href="/contact" className="px-12 py-6 text-2xl">
+          <Button href="/contact" className="px-8 py-3.5 text-base">
             Get a Quote
           </Button>
         </div>
@@ -38,12 +38,12 @@ export default function Header() {
           aria-label="Toggle menu"
           aria-expanded={open}
         >
-          {open ? <X className="h-10 w-10" /> : <Menu className="h-10 w-10" />}
+          {open ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
         </button>
       </Container>
 
       <nav className="hidden border-t border-neutral-200/80 lg:block">
-        <Container className="flex items-center justify-center gap-14 py-5">
+        <Container className="flex items-center justify-center gap-10 py-3.5">
           {siteConfig.nav.map((item) => {
             const active =
               item.href === "/"
@@ -53,7 +53,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-2xl transition-colors hover:text-primary-600 ${
+                className={`text-base transition-colors hover:text-primary-600 ${
                   active ? "font-bold text-primary-600" : "font-medium text-neutral-700"
                 }`}
               >
