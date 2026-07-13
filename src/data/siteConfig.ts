@@ -19,12 +19,6 @@ export const siteConfig = {
     support: "support@techifyed.com",
     sales: "sales@techifyed.com",
   },
-  social: {
-    facebook: "#",
-    instagram: "#",
-    linkedin: "#",
-    x: "#",
-  },
   nav: [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },

@@ -371,7 +371,8 @@
       "Bash(node find_overflow2.js http://localhost:3000 240)",
       "Bash(taskkill //PID 8356 //F)",
       "Read(//c/Users/JSK/Documents/GitHub/JSK Corporation/src/app/information-security-policy/**)",
-      "Read(//c/Users/JSK/Documents/GitHub/JSK Corporation/src/app/compliance-policy-development/**)"
+      "Read(//c/Users/JSK/Documents/GitHub/JSK Corporation/src/app/compliance-policy-development/**)",
+      "Read(//c/Users/JSK/Documents/GitHub/JSK Corporation/src/data/**)"
     ],
     "additionalDirectories": [
       "\\tmp",

@@ -86,7 +86,6 @@ const organizationSchema = {
     postalCode: siteConfig.addressParts.postalCode,
     addressCountry: siteConfig.addressParts.country,
   },
-  sameAs: Object.values(siteConfig.social).filter((url) => url !== "#"),
 };
 
 export default function RootLayout({

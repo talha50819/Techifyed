@@ -6,7 +6,6 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import Container from "./ui/Container";
 import { siteConfig } from "@/data/siteConfig";
 import { services } from "@/data/services";
-import { FacebookIcon, InstagramIcon, LinkedInIcon, XIcon } from "./SocialIcons";
 import { reopenCookiePreferences } from "./CookieConsent";
 
 export default function Footer() {
@@ -29,23 +28,6 @@ export default function Footer() {
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-primary-200/80">
               {siteConfig.description}
             </p>
-            <div className="mt-6 flex gap-3">
-              {[
-                { href: siteConfig.social.facebook, icon: FacebookIcon, label: "Facebook" },
-                { href: siteConfig.social.instagram, icon: InstagramIcon, label: "Instagram" },
-                { href: siteConfig.social.linkedin, icon: LinkedInIcon, label: "LinkedIn" },
-                { href: siteConfig.social.x, icon: XIcon, label: "X" },
-              ].map(({ href, icon: Icon, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-primary-600"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
           </div>
 
           <div>
